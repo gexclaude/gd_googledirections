@@ -90,8 +90,11 @@ class ModuleGD_GoogleDirections extends Module
 	$this->Template->via_readonly = $this->gd_googledirections_via_readonly;
 	$this->Template->from_readonly = $this->gd_googledirections_from_readonly;
 
-	// aply the flag whether to add the via adress or not
+	// apply the flag whether to add the via adress or not
 	$this->Template->add_via = $this->gd_googledirections_via_add;
+
+	// apply the flag whether to load the map on startup or not
+	$this->Template->show_single_point = $this->gd_googledirections_show_single_point;
 
 	// apply labels
 	$this->Template->fromLabel = $this->getLabel($this->gd_googledirections_from_label, 'gd_googledirections_from_label_default');

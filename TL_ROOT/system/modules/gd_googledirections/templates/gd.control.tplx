@@ -5,7 +5,7 @@
 	    <td>
 			<?php if($this->from_coords): ?>
 				<?php echo $this->from; ?>
-				<input type="hidden" name="from" value="<?php echo $this->to_coords; ?>" />
+				<input type="hidden" name="from" value="<?php echo $this->from_coords; ?>" />
 			<?php else: ?>
 				<input type="text" size="20" id="fromAddress" name="from" value="<?php echo $this->from; ?>" <?php if($this->from_readonly): ?> readonly="readonly"<?php endif; ?> />
 			<?php endif; ?>

@@ -70,6 +70,7 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_from_label']= array('Alter
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_label']= array('Alternative Bezeichnung für \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_label_default'] . '\'', 'Optional');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_to_label']= array('Alternative Bezeichnung für \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_to_label_default'] . '\'', 'Optional');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label']= array('Alternative Bezeichnung für \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label_default'] . '\'', 'Optional');
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_show_single_point']= array('Anzeigen der Ziel- oder Startadresse beim Seitenaufruf', 'Zeigt die Ziel- oder Startadresse nach dem Laden der Seite an.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_add']= array('Eine Via-Adresse einfügen', 'Erlaubt es einen zusätzlichen Wegpunkt zwischen der Start- und der Zieladresse zu erfassen');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_template']= array('Template', 'Verwendetes Template.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_width']= array('Breite', 'Bitte geben Sie die Breite der Karte ein.');

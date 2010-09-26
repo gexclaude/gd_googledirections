@@ -21,6 +21,7 @@ CREATE TABLE `tl_module` (
   `gd_googledirections_via_readonly` char(1) NOT NULL default '',
   `gd_googledirections_via_label` varchar(255) NOT NULL default '',
   `gd_googledirections_via_add` char(1) NOT NULL default '',
+  `gd_googledirections_show_single_point` char(1) NOT NULL default '',
   `gd_googledirections_to` varchar(255) NOT NULL default '',
   `gd_googledirections_to_coords` varchar(64) NOT NULL default '',
   `gd_googledirections_to_readonly` char(1) NOT NULL default '',

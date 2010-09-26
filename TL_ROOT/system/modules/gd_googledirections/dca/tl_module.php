@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'gd_googledirect
 /**
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['gd_googledirections'] = '{title_legend},name,type,headline;{gd_directions_legend},gd_googledirections_from,gd_googledirections_to,gd_googledirections_from_coords,gd_googledirections_to_coords,gd_googledirections_from_readonly,gd_googledirections_to_readonly,gd_googledirections_from_label,gd_googledirections_to_label,gd_googledirections_submit_label,gd_googledirections_width,gd_googledirections_height,gd_googledirections_list_width,gd_googledirections_template;{gd_directions_marker_legend},gd_googledirections_marker;{gd_directions_via_add_legend},gd_googledirections_via_add;{protected_legend},guests,protected;{expert_legend},align,space,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['gd_googledirections'] = '{title_legend},name,type,headline;{gd_directions_legend},gd_googledirections_from,gd_googledirections_to,gd_googledirections_from_coords,gd_googledirections_to_coords,gd_googledirections_from_readonly,gd_googledirections_to_readonly,gd_googledirections_from_label,gd_googledirections_to_label,gd_googledirections_submit_label,gd_googledirections_show_single_point,gd_googledirections_width,gd_googledirections_height,gd_googledirections_list_width,gd_googledirections_template;{gd_directions_marker_legend},gd_googledirections_marker;{gd_directions_via_add_legend},gd_googledirections_via_add;{protected_legend},guests,protected;{expert_legend},align,space,cssID';
 
 /**
  * Add subpalettes to tl_module
@@ -133,6 +133,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_submit_label'] = 
 	'search'                  => false,
 	'eval'                    => array('mandatory'=>false, 'maxlength'=>255),
 );
+$GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_show_single_point'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_show_single_point'],
+	'inputType'               => 'checkbox'
+);
 $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_via_add'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_add'],
@@ -145,7 +150,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_template'] = arra
 	'default'                 => 'mod_gd_googledirections',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => $this->getTemplateGroup('mod_gd_googledirections')
+	'options'                 => $this->getTemplateGroup('mod_gd_googledirections'),
+	'eval'                    => array('tl_class'=>'w50')
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_width'] = array
 (
@@ -226,7 +232,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_list_width'] = ar
 	'default'                 => '400',
 	'options'                  => array('px','%','em','pt','pc','in','cm','mm'),
 	'search'                  => false,
-	'eval'                    => array('mandatory'=>true, 'rgxp'=>digit,'maxlength'=>64)
+	'eval'                    => array('mandatory'=>true, 'rgxp'=>digit,'maxlength'=>64),
+	'eval'                    => array('tl_class'=>'w50')
 );
 
 ?>

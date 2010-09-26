@@ -70,6 +70,7 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_from_label']= array('Alter
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_label']= array('Alternative label for \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_label_default'] . '\'', 'Optional');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_to_label']= array('Alternative label for \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_to_label_default'] . '\'', 'Optional');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label']= array('Alternative label for \'' . $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label_default'] . '\'', 'Optional');
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_show_single_point']= array('Show the destination or start location on load', 'Shows the destination or start location as soon as the page is loaded');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_via_add']= array('Add a via address (waypoint)', 'Allows to enter a waypoint between the start and the destination address');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_template']= array('Template', 'Used Template.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_width']= array('Width', 'Please enter the map width.');

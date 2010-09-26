@@ -5,9 +5,12 @@
     var gdir;
     var geocoder = null;
     var addressMarker;
+	var singlePointMarker;
 
     function initialize() {
 		if (!initialized && GBrowserIsCompatible()) {
+			geocoder = new GClientGeocoder();
+			
 			gdMap = new GMap2($('gd_map_canvas'));
 			gdMap.addControl(new GLargeMapControl());
 			gdMap.addControl(new GMapTypeControl());
@@ -45,6 +48,11 @@
 
     function setDirections(waypoints) {
 		initialize();
+
+		// remove single point marker if present
+		if(singlePointMarker)
+			gdMap.removeOverlay(singlePointMarker);
+
 		var filteredWaypoints = new Array();
 		for(var i = 0; i < waypoints.length; i++) {
 			var currentElement = waypoints[i];
@@ -52,7 +60,10 @@
 				filteredWaypoints.push(currentElement);
 			}
 		}
-		gdir.loadFromWaypoints(filteredWaypoints, { "locale": "<?php echo $this->lang; ?>" });
+		if(filteredWaypoints.length == 1)
+			showMapForSinglePointAddress(filteredWaypoints[0]);
+		else
+			gdir.loadFromWaypoints(filteredWaypoints, { "locale": "<?php echo $this->lang; ?>" });
 	}
 
     function handleErrors(){
@@ -89,19 +100,60 @@
     function onGDirectionsLoad(){
 		removeError();
     }
-    <?php // only load directions on startup when both preset values from and to are given
-    if(strlen($this->from) > 0 && strlen($this->to) > 0): ?>
-    window.addEvent('domready', function() {
-	<?php
+	function showMapForSinglePoint(point) {
+		initialize();
+		
+		singlePointMarker = new GMarker(point);
+		gdMap.addOverlay(singlePointMarker);
+
+		gdMap.setCenter(point, 14);
+		gdir.clear();
+	}
+
+	function showMapForSinglePointAddress(address){
+		initialize();
+		
+		if (geocoder) {
+			geocoder.getLatLng(address,
+			function(point) {
+				if (!point) {
+					showError("<?php echo $this->unknownAddress; ?>");
+				} else {
+					showMapForSinglePoint(point);
+				}
+			});
+		}
+	}
+    <?php
+
 	$initialFrom = ($this->from_coords) ? $this->from_coords : $this->from;
 	$initialVia = ($this->via_coords) ? $this->via_coords : $this->via;
 	$initialTo = ($this->to_coords) ? $this->to_coords : $this->to;
 
-	if($this->add_via): ?>
-		setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialVia; ?>', '<?php echo $initialTo; ?>'));
-	<?php else: ?>
-		setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialTo; ?>'));
-	<?php endif; ?>
-    });
+	$isFromPreset = strlen($initialFrom) > 0;
+	$isToPreset = strlen($initialTo) > 0;
+
+	// at least one value needs to be preset
+	if($isFromPreset || $isToPreset): ?>
+		window.addEvent('domready', function() {
+		<?php if($isFromPreset && $isToPreset): ?>
+			<?php
+			if($this->add_via): ?>
+				setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialVia; ?>', '<?php echo $initialTo; ?>'));
+			<?php else: ?>
+				setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialTo; ?>'));
+			<?php endif; ?>
+	    <?php elseif($this->show_single_point): ?>
+			<?php if($this->from_coords): ?>
+				showMapForSinglePoint(new GLatLng(<?php echo $this->from_coords; ?>));
+			<?php elseif($this->from): ?>
+				setDirections(new Array('<?php echo $this->from; ?>'));
+			<?php elseif($this->to_coords): ?>
+				showMapForSinglePoint(new GLatLng(<?php echo $this->to_coords; ?>));
+			<?php else: ?>
+				setDirections(new Array('<?php echo $this->to; ?>'));
+			<?php endif;?>
+		<?php endif; ?>
+		});
     <?php endif; ?>
 </script>
