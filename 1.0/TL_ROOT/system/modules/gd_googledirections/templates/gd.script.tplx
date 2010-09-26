@@ -1,0 +1,107 @@
+<?php /* the script below requires MooTools */ ?>
+<script type="text/javascript">
+    var initialized = false;
+    var gdMap;
+    var gdir;
+    var geocoder = null;
+    var addressMarker;
+
+    function initialize() {
+		if (!initialized && GBrowserIsCompatible()) {
+			gdMap = new GMap2($('gd_map_canvas'));
+			gdMap.addControl(new GLargeMapControl());
+			gdMap.addControl(new GMapTypeControl());
+
+			gdir = new GDirections(gdMap, $('gd_directionList'));
+			GEvent.addListener(gdir, "load", onGDirectionsLoad);
+			GEvent.addListener(gdir, "error", handleErrors);
+
+			<?php if ($this->marker) : ?>
+			var map_point = new GLatLng(<?php echo $this->marker_coords; ?>);
+			var map_icon = new GIcon(G_DEFAULT_ICON);
+			<?php if ($this->icon) : ?>
+				map_icon.image = "<?php echo $this->icon; ?>";
+				<?php if ($this->shadow || (is_array($this->shadow) && sizeof($this->shadow) < 1)) : ?>
+				map_icon.shadow = "<?php echo $this->shadow; ?>";
+				map_icon.shadowSize = new GSize(<?php echo $this->shadowsize; ?>);
+				<?php endif; ?>
+				map_icon.iconSize = new GSize(<?php echo $this->iconsize; ?>);
+				map_icon.iconAnchor = new GPoint(<?php echo $this->iconanchor; ?>);
+			<?php endif; ?>
+			map_marker = new GMarker(map_point, map_icon);
+			gdMap.addOverlay(map_marker);
+			<?php if ($this->infowindow) : ?>
+				map_icon.infoWindowAnchor = new GPoint(<?php echo $this->infowindow_anchor; ?>);
+				GEvent.addListener(map_marker, "click", function() { map_marker.openInfoWindowHtml("<?php echo $this->infowindow_text; ?>"); });
+				<?php if ($this->infowindow_auto) : ?>
+				map_marker.openInfoWindowHtml("<?php echo $this->infowindow_text; ?>");
+				<?php endif; ?>
+			<?php endif; ?>
+			<?php endif; ?>
+
+			initialized = true;
+		}
+    }
+
+    function setDirections(waypoints) {
+		initialize();
+		var filteredWaypoints = new Array();
+		for(var i = 0; i < waypoints.length; i++) {
+			var currentElement = waypoints[i];
+			if(currentElement.length > 0) {
+				filteredWaypoints.push(currentElement);
+			}
+		}
+		gdir.loadFromWaypoints(filteredWaypoints, { "locale": "<?php echo $this->lang; ?>" });
+	}
+
+    function handleErrors(){
+	if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
+	    showError("<?php echo $this->badRequest; ?>\n Error code: " + gdir.getStatus().code);
+	else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
+	    showError("<?php echo $this->serverError; ?>\n Error code: " + gdir.getStatus().code);
+	else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
+	    showError("<?php echo $this->missingQuery; ?>\n Error code: " + gdir.getStatus().code);
+	else if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
+	    showError("<?php echo $this->unknownAddress; ?>");
+	else if (gdir.getStatus().code == G_GEO_UNAVAILABLE_ADDRESS)
+	    showError("<?php echo $this->unavailableAddress; ?>");
+	else if (gdir.getStatus().code == G_GEO_UNKNOWN_DIRECTIONS)
+	    showError("<?php echo $this->unknownDirections; ?>");
+	else if (gdir.getStatus().code == G_GEO_BAD_KEY)
+	    showError("<?php echo $this->badKey; ?>\n Error code: " + gdir.getStatus().code);
+	else showError("<?php echo $this->defaultError; ?>\n Error code: " + gdir.getStatus().code);
+    }
+
+    function showError(error){
+		setErrorText(error);
+		$('gd_errorBox').setStyle('display', 'block');
+		$('gd_map_canvas').setStyle('display', 'none');
+    }
+    function removeError(){
+		$('gd_map_canvas').setStyle('display', 'block');
+		$('gd_errorBox').setStyle('display', 'none');
+		setErrorText('');
+    }
+    function setErrorText(text){
+		$('gd_errorBox').set('text',text);
+    }
+    function onGDirectionsLoad(){
+		removeError();
+    }
+    <?php // only load directions on startup when both preset values from and to are given
+    if(strlen($this->from) > 0 && strlen($this->to) > 0): ?>
+    window.addEvent('domready', function() {
+	<?php
+	$initialFrom = ($this->from_coords) ? $this->from_coords : $this->from;
+	$initialVia = ($this->via_coords) ? $this->via_coords : $this->via;
+	$initialTo = ($this->to_coords) ? $this->to_coords : $this->to;
+
+	if($this->add_via): ?>
+		setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialVia; ?>', '<?php echo $initialTo; ?>'));
+	<?php else: ?>
+		setDirections(new Array('<?php echo $initialFrom; ?>', '<?php echo $initialTo; ?>'));
+	<?php endif; ?>
+    });
+    <?php endif; ?>
+</script>
