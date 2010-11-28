@@ -1,3 +1,4 @@
+<?php /* CONTROL */ ?>
 <form action="#" onsubmit="setDirections(new Array(this.from.value,<?php if($this->add_via): echo 'this.via.value, '; endif;?> this.to.value)); return false">
     <table>
 	<tr>
@@ -40,4 +41,3 @@
 	</tr>
     </table>
 </form>
-<div id="gd_errorBox" style="display: none; "></div>
