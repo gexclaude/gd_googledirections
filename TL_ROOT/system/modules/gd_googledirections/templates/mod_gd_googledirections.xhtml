@@ -12,12 +12,12 @@
 	include($template); 
 ?>
 
-<div id="gd_errorBox" style="display: none; "></div>
+<div id="gd_errorBox<?php echo $this->moduleId; ?>" class="gd_errorBox" style="display: none; "></div>
 <br/>
 <table class="gd_directionsContainer">
     <tr>
-	<td valign="top"><div id="gd_directionList" style="width: <?php echo $this->listWidth; ?>"></div></td>
-	<td valign="top"><div id="gd_map_canvas" style="width:<?php echo $this->width; ?>; height: <?php echo $this->height; ?>"></div></td>
+	<td valign="top"><div id="gd_directionList<?php echo $this->moduleId; ?>" class="gd_directionList" style="width: <?php echo $this->listWidth; ?>"></div></td>
+	<td valign="top"><div id="gd_map_canvas<?php echo $this->moduleId; ?>" class="gd_map_canvas" style="width:<?php echo $this->width; ?>; height: <?php echo $this->height; ?>"></div></td>
     </tr>
 </table>
 

@@ -40,12 +40,3 @@ CREATE TABLE `tl_module` (
   `gd_googledirections_infowindow_auto` char(1) NOT NULL default '',
   `gd_googledirections_list_width` varchar(64) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- 
--- Table `tl_page`
--- 
-
-CREATE TABLE `tl_page` (
-  `gd_googlemaps_id` varchar(255) NOT NULL default ''
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;

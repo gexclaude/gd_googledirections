@@ -38,21 +38,28 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label_default']= 'R
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_check_input'] = 'Bitte überprüfen Sie Ihre Eingaben und wiederholen Sie den Vorgang.';
 
 // =400
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_request'] = 'Die Routenabfrage ist fehlerhaft.';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_request'] = 'Die Routenabfrage ist fehlerhaft.';
 // =500
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_server_error'] = 'Die Routenabfrage konnte nicht durchgeführt werden. Bitte wiederholen Sie den Vorgang später.';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_server_error'] = 'Die Routenabfrage konnte nicht durchgeführt werden. Bitte wiederholen Sie den Vorgang später.';
 // =601
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_missing_query'] = 'Die Routenabfrage ist leer!';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_missing_query'] = 'Die Routenabfrage ist leer!';
 // =602
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_address'] = 'Eine der eingegebenen Adressen konnte nicht gefunden werden.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'];
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_address'] = 'Eine der eingegebenen Adressen konnte nicht gefunden werden.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'];
 // =603
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unavailable_address'] = 'Eine der eingegebenen Adressen steht nicht zur Verfügung.';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unavailable_address'] = 'Eine der eingegebenen Adressen steht nicht zur Verfügung.';
 // =604
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_directions'] = 'Die Route konnte nicht berechnet werden, entweder stehen die benötigten Daten nicht zur Verfügung oder es existiert keine Route zwischen den beiden Punkten.';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_directions'] = 'Die Route konnte nicht berechnet werden, entweder stehen die benötigten Daten nicht zur Verfügung oder es existiert keine Route zwischen den beiden Punkten.';
 // =610
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_key'] = 'Der verwendete Key ist ungültig.';
+//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_key'] = 'Der verwendete Key ist ungültig.';
 // =620, evtl. andere
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_default_error'] = 'Ein unbekannter Fehler ist aufgetreten.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'] ;
+
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_invalid_request'] = 'Die Routenabfrage ist fehlerhaft.';
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_max_waypoints_exceeded'] = 'Die maximal zugelassene Anzahl Wegpunkte wurde überschritten.';
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_not_found'] = 'Eine der eingegebenen Adressen konnte nicht gefunden werden.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'];
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_over_query_limit'] = 'Die Anfragebeschränkungen wurden von der Webseite in einem zu geringen Zeitraum überschritten.';
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_request_denied'] = 'Die Routenabfrage wurde verweigert.';
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_error'] = 'Ein unbekannter Fehler ist aufgetreten.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'] ;
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_zero_results'] = 'Es konnte keine Route gefunden werden.';
 
 /**
  * Fields

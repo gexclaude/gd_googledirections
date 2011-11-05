@@ -1,5 +1,5 @@
 <?php /* CONTROL */ ?>
-<form action="#" onsubmit="setDirections(new Array(this.from.value,<?php if($this->add_via): echo 'this.via.value, '; endif;?> this.to.value)); return false">
+<form action="#" onsubmit="gd.setDirections(new Array(this.from.value,<?php if($this->add_via): echo 'this.via.value, '; endif;?> this.to.value)); return false">
     <table>
 	<tr>
 	    <th align="right"><?php echo $this->fromLabel; ?>&nbsp;</th>
