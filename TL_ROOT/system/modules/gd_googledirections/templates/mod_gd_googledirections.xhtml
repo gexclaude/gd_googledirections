@@ -5,9 +5,9 @@
 <?php endif; ?>
 
 <?php /* Dynamic control inclusion, first check if there is a custom template */
-	$template = TL_ROOT . '/templates/gd.control.tpl';
+	$template = TL_ROOT . '/templates/gd.control.xhtml';
 	if(!file_exists($template)) {
-		$template = TL_ROOT . '/system/modules/gd_googledirections/templates/gd.control.tpl';
+		$template = TL_ROOT . '/system/modules/gd_googledirections/templates/gd.control.xhtml';
 	}
 	include($template); 
 ?>
@@ -22,9 +22,9 @@
 </table>
 
 <?php /* Dynamic control inclusion, first check if there is a custom template */
-	$template = TL_ROOT . '/templates/gd.script.tpl';
+	$template = TL_ROOT . '/templates/gd.script.xhtml';
 	if(!file_exists($template)) {
-		$template = TL_ROOT . '/system/modules/gd_googledirections/templates/gd.script.tpl';
+		$template = TL_ROOT . '/system/modules/gd_googledirections/templates/gd.script.xhtml';
 	}
 	include($template);
 ?>
