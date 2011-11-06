@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Claude Gex 2010
+ * @copyright  Claude Gex 2010 - 2011
  * @author     Claude Gex <mail@claudegex.ch>
  * @license    LGPL
  */
@@ -36,22 +36,6 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label_default']= 'G
  * Error Labels
  */
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_check_input'] = 'Please verify your inputs and try again.';
-
-// =400
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_request'] = 'A directions request could not be successfully parsed.';
-// =500
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_server_error'] = 'The directions request could not be processed. Please try again.';
-// =601
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_missing_query'] = 'The directions request is empty!';
-// =602
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_address'] = 'No corresponding geographic location could be found for the specified address. This may be due to the fact that the address is relatively new, or it may be incorrect.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'];
-// =603
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unavailable_address'] = 'The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.';
-// =604
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_directions'] = 'The directions between the points mentioned in the query could not be computed. This is usually because there is no route available between the two points, or because we do not have data for routing in that region.';
-// =610
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_key'] = '	 The given key is either invalid or does not match the domain for which it was given. ';
-// =620, evtl. andere
 
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_invalid_request'] = 'A directions request could not be successfully parsed.';
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_max_waypoints_exceeded'] = 'The number of allowed waypoints exceeded.';
@@ -83,7 +67,7 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_template']= array('Templat
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_width']= array('Width', 'Please enter the map width.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_height']= array('Height', 'Please enter the map height.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker']= array('Integrate a marker or icon', 'You can integrate a standard marker or an individual icon as well as a text box.');
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_coords']= array('Coordinates of the marker', 'The coordinates of the marker can differ from the map center. Leaving this blank will center the marker on the map.');
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_coords']= array('Coordinates of the marker', 'The coordinates of the marker can differ from the map center. This field must be filled in order to show the marker.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_icon']= array('Individual icon', 'You can choose an individual icon, e.g. a company logo. Without specifying the standard Google icon is set.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_shadow']= array('Individual shadow', 'Individual shadows can be set for individual icons.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_anchor']= array('Position of the icon', 'The position of the icon can be changed by coordinate LEFT,UP. 5,10 e.g. moves the icon by 5 pixels to the left and 10 pixels up from the upper left corner of the icon.');

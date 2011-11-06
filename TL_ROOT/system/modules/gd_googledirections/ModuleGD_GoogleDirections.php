@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Claude Gex 2010
+ * @copyright  Claude Gex 2010 - 2011
  * @author     Claude Gex <mail@claudegex.ch>
  * @license    LGPL
  */
@@ -28,7 +28,7 @@
 /**
  * Class ModuleGD_GoogleDirections
  *
- * @copyright  Claude Gex 2010
+ * @copyright  Claude Gex 2010 - 2011
  * @author     Claude Gex <mail@claudegex.ch>
  * @package    Controller
  */
@@ -41,8 +41,6 @@ class ModuleGD_GoogleDirections extends Module
      */
     protected $strTemplate = 'mod_gd_googledirections';
    
-	protected $zeroVector = array(0,0);
-
     /**
      * Display a wildcard in the back end
      * @return string
@@ -105,13 +103,15 @@ class ModuleGD_GoogleDirections extends Module
 		$this->Template->submitLabel = $this->getLabel($this->gd_googledirections_submit_label,'gd_googledirections_submit_label_default');
 
 		// set error messages
-		$this->Template->invalidRequest = $this->getLanguageLabel('gd_googledirection_invalid_request');
-		$this->Template->maxWaypointExceeded = $this->getLanguageLabel('gd_googledirection_max_waypoints_exceeded');
-		$this->Template->notFound = $this->getLanguageLabel('gd_googledirection_not_found');
-		$this->Template->overQueryLimit = $this->getLanguageLabel('gd_googledirection_over_query_limit');
-		$this->Template->requestDenied = $this->getLanguageLabel('gd_googledirection_request_denied');
-		$this->Template->zeroResults = $this->getLanguageLabel('gd_googledirection_zero_results');
-		$this->Template->defaultError = $this->getLanguageLabel('gd_googledirection_unknown_error');
+		$this->Template->labels = json_encode(array(
+			'invalidRequest' => $this->getLanguageLabel('gd_googledirection_invalid_request'),
+			'maxWaypointExceeded' => $this->getLanguageLabel('gd_googledirection_max_waypoints_exceeded'),
+			'notFound' => $this->getLanguageLabel('gd_googledirection_not_found'),
+			'overQueryLimit' => $this->getLanguageLabel('gd_googledirection_over_query_limit'),
+			'requestDenied' => $this->getLanguageLabel('gd_googledirection_request_denied'),
+			'zeroResults' => $this->getLanguageLabel('gd_googledirection_zero_results'),
+			'defaultError' => $this->getLanguageLabel('gd_googledirection_unknown_error')
+		));
 
 		// dimensions
 		$listWidth = unserialize($this->gd_googledirections_list_width);
@@ -121,79 +121,92 @@ class ModuleGD_GoogleDirections extends Module
 		$this->Template->width = $width['value'].$width['unit'];
 		$this->Template->height = $height['value'].$height['unit'];
 
+		
 		// maybe there is a marker
 		if ($this->gd_googledirections_marker)
 		{
-			$this->Template->marker = true;
+			$markerMap = array();
 			if ($this->gd_googledirections_marker_coords)
 			{
-				$this->Template->marker_coords = $this->gd_googledirections_marker_coords;
-			}
-			else
-			{
-				$this->Template->marker_coords = $this->gd_googledirections_coords;
+				$coords = $this->splitByComma($this->gd_googledirections_marker_coords);
+				$markerMap['markerCoords']['lat'] = $coords[0];
+				$markerMap['markerCoords']['lng'] = $coords[1];
 			}
 			if ($this->gd_googledirections_marker_icon)
 			{
+				$markerMap['icon']['size']['x'] = 0;
+				$markerMap['icon']['size']['y'] = 0;
+				
 				$icondata = unserialize($this->gd_googledirections_marker_icon);
 				$shadowdata = unserialize($this->gd_googledirections_marker_shadow);
 				$icon = $icondata[0];
 				$shadow = $shadowdata[0];
-				$this->Template->icon = $icon;
-				$this->Template->shadow = $shadow;
 				
 				$iconPath = TL_ROOT . '/' . $icon;
-				if (file_exists($iconPath))
+				if (!empty($icon) && file_exists($iconPath))
 				{
 					$size = getimagesize($iconPath);
-					$this->Template->iconsize = array($size[0], $size[1]);
+					$markerMap['icon']['url'] = $icon;
+					$markerMap['icon']['size']['x'] = (int) $size[0];
+					$markerMap['icon']['size']['y'] = (int) $size[1];
 				}
-				else
-				{
-					$this->Template->iconsize = $this->zeroVector;
-					$this->Template->iconanchor = $this->zeroVector;
-				}
+					
 				$shadowPath = TL_ROOT . '/' . $shadow;
-				if (file_exists($shadowPath))
+				if (!empty($shadow) && file_exists($shadowPath))
 				{
 					$size = getimagesize($shadowPath);
-					$this->Template->shadowsize = array($size[0], $size[1]);
-				}
-				else
-				{
-					$this->Template->shadowsize = $this->zeroVector;
+					$markerMap['shadow']['url'] = $shadow;
+					$markerMap['shadow']['size']['x'] = (int) $size[0];
+					$markerMap['shadow']['size']['y'] = (int) $size[1];
 				}
 				
 				if ($this->gd_googledirections_marker_anchor)
 				{
-					$this->Template->iconanchor = $this->splitByComma($this->gd_googledirections_marker_anchor);
+					$anchor = $this->splitByComma($this->gd_googledirections_marker_anchor);
+					$markerMap['icon']['anchor']['x'] = (int) $anchor[0];
+					$markerMap['icon']['anchor']['y'] = (int) $anchor[1];
+					
+					if(isset($markerMap['shadow'])) {
+						$markerMap['shadow']['anchor']['x'] = (int) $anchor[0];
+						$markerMap['shadow']['anchor']['y'] = (int) $anchor[1];
+					}
 				}
 				else
 				{
-					$this->Template->iconanchor = $this->zeroVector;
+					$markerMap['icon']['anchor']['x'] = 0;
+					$markerMap['icon']['anchor']['y'] = 0;
+					if(isset($markerMap['shadow'])) {
+						$markerMap['shadow']['anchor']['x'] = 0;
+						$markerMap['shadow']['anchor']['y'] = 0;
+					}
 				}
 			}
 
 			// check for infowindow
 			if ($this->gd_googledirections_infowindow_text)
 			{
-				$this->Template->infowindow = true;
-				$this->Template->infowindow_auto = $this->gd_googledirections_infowindow_auto;
-				$this->Template->infowindow_text = preg_replace("(\r\n|\n|\r)",'',(nl2br(str_replace('"','\"', $this->gd_googledirections_infowindow_text))));
+				$markerMap['infoWindow']['autoOpen'] = $this->gd_googledirections_infowindow_auto;
+				$markerMap['infoWindow']['content'] = preg_replace("(\r\n|\n|\r)",'',(nl2br(str_replace('"','\"', $this->gd_googledirections_infowindow_text))));
 				if ($this->gd_googledirections_infowindow_anchor)
 				{
-					$this->Template->infowindow_anchor = $this->splitByComma($this->gd_googledirections_infowindow_anchor);
+					$anchor = $this->splitByComma($this->gd_googledirections_infowindow_anchor);
+					$markerMap['infoWindow']['anchor']['x'] = (int) $anchor[0];
+					$markerMap['infoWindow']['anchor']['y'] = (int) $anchor[1];
 				}
 				else
 				{
-					$this->Template->infowindow_anchor = $this->zeroVector;
+					$markerMap['infoWindow']['anchor']['x'] = 0;
+					$markerMap['infoWindow']['anchor']['y'] = 0;
 				}
 			}
+			
+			$this->Template->markerMap = json_encode($markerMap);
 		}
+		
     }
 
 	protected function splitByComma($str) {
-		return explode(',',str);
+		return explode(',',  str_replace(' ', '', $str));
 	}
 	
     protected function getLabel($value, $defaultKey)

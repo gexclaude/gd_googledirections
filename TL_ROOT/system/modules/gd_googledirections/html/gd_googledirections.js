@@ -1,26 +1,35 @@
+/* google directions plugin script for the Contao CMS
+ * the script below requires MooTools */
 function GDGoogleDirections(moduleId, labels, markerMap) {
 	var self = this;
 
+	// flag to track initialization state
 	var initialized = false;
-    var gdMap;
-	var directionsService;
-	var directionsDisplay
-	var geocoder;
-	var singlePointMarker;
 	
-	var gdMapCanvas = $('gd_map_canvas' + moduleId);
-	var gdDirectionList = $('gd_directionList' + moduleId);
-	var gdErrorBox = $('gd_errorBox' + moduleId);
+	// div's to link content to
+	var gdMapCanvas;
+	var gdDirectionList;
+	var gdErrorBox;
+	
+    var gdMap ;
+	var directionsService;
+	var directionsDisplay;
+	var geocoder;
 
+	var singlePointMarker;
+
+	// initializer function
     function initialize() {
 		if (!initialized) {
-			geocoder = new google.maps.Geocoder();
-
+			// fetch div references
+			gdMapCanvas = $('gd_map_canvas' + moduleId);
+			gdDirectionList = $('gd_directionList' + moduleId);
+			gdErrorBox = $('gd_errorBox' + moduleId);
+			
+			// map instance to work with
 			gdMap = new google.maps.Map(gdMapCanvas, {
 				mapTypeControl: true,
-				mapTypeControlOptions : {
-					
-				},
+				mapTypeControlOptions : {},
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				navigationControl: true,
 				navigationControlOptions: {
@@ -28,19 +37,24 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 				}
 			});
 			
-			
+			// geocoder instance to geocode locations (address and coordinates)
+			geocoder = new google.maps.Geocoder();
+
+			// init directions
 			directionsService = new google.maps.DirectionsService();
 			directionsDisplay = new google.maps.DirectionsRenderer({panel: gdDirectionList});
-
 			directionsDisplay.setMap(gdMap);
-			
-			if ('undefined' != typeof markerMap) {
-				var map_point = new google.maps.LatLng(markerMap.markerCoords);
 
+			// add marker if there is any given
+			if ('undefined' != typeof markerMap && 'undefined' != typeof markerMap.markerCoords) {
+				var mapPoint = new google.maps.LatLng(markerMap.markerCoords.lat,markerMap.markerCoords.lng);
+				
 				var markerOptions = {
 					map: gdMap,
-					position: map_point
+					position: mapPoint
 				};
+				
+				// add custom icon if set
 				if ('undefined' != typeof markerMap.icon) {
 					markerOptions.icon = new google.maps.MarkerImage(markerMap.icon.url,
 						new google.maps.Size(markerMap.icon.size.x, markerMap.icon.size.y),
@@ -51,9 +65,11 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 							new google.maps.Point(markerMap.shadow.anchor.x, markerMap.shadow.anchor.y));
 					}
 				}
+				
 				// create marker
-				map_marker = new google.maps.Marker(markerOptions);
+				var map_marker = new google.maps.Marker(markerOptions);
 
+				// add info window if set
 				if ('undefined' != typeof markerMap.infoWindow) {
 					var infowindow = new google.maps.InfoWindow({
 						content: markerMap.infoWindow.content,
@@ -64,12 +80,13 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 						infowindow.open(gdMap, map_marker);
 					}
 				}
+				
 			}
-
 			initialized = true;
 		}
-    }
+	}
 
+	// public method, shows a single point on the map
 	this.showMapForSinglePoint = function (point) {
 		initialize();
 		
@@ -83,6 +100,7 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 		gdDirectionList.empty();
 	}
 	
+	// public method, basically triggers directions load
     this.setDirections = function (locations) {
 		initialize();
 		
@@ -92,6 +110,7 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 		if(singlePointMarker)
 			singlePointMarker.setVisible(false);
 
+		// filters out empty entries
 		var filteredLocations = new Array();
 		for(var i = 0; i < locations.length; i++) {
 			var currentElement = locations[i];
@@ -99,9 +118,12 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 				filteredLocations.push(currentElement);
 			}
 		}
+		
+		// either show map for single location, or trigger directions call
 		if(filteredLocations.length == 1) {
 			showMapForSinglePointAddress(filteredLocations[0]);
 		} else {
+			// check for intermediate waypoints
 			var waypoints = new Array();
 			if(filteredLocations.length > 2) {
 				waypoints = filteredLocations.slice(1,filteredLocations.length-1);
@@ -111,6 +133,7 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 				}
 			}
 			
+			// build up directions request
 			var request = {
 			  origin: filteredLocations[0], 
 			  destination: filteredLocations[filteredLocations.length-1],
@@ -118,6 +141,7 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 			  travelMode: google.maps.DirectionsTravelMode.DRIVING
 			};
 
+			// get directions result
 			directionsService.route(request, function(response, status) {
 			  if (status == google.maps.DirectionsStatus.OK) {
 				directionsDisplay.setDirections(response);
@@ -128,6 +152,7 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 		}
 	}
 
+	// handle errors, shows messages
     function handleErrors(status){
 		gdDirectionList.empty();
 		if (status == google.maps.DirectionsStatus.INVALID_REQUEST)
@@ -148,31 +173,36 @@ function GDGoogleDirections(moduleId, labels, markerMap) {
 			showError(labels.defaultError + "\n Error code: " + status);
 	}
 
+	// show error, hide map
     function showError(error){
 		setErrorText(error);
 		gdErrorBox.setStyle('display', 'block');
 		gdMapCanvas.setStyle('display', 'none');
     }
+	
+	// remove error, show map
     function removeError(){
 		gdMapCanvas.setStyle('display', 'block');
 		gdErrorBox.setStyle('display', 'none');
 		setErrorText('');
     }
-    function setErrorText(text){
+
+	// set error
+	function setErrorText(text){
 		gdErrorBox.set('text',text);
     }
 
-
+	// show map for a single address
 	function showMapForSinglePointAddress(address){
 		initialize();
 		
+		// geocode address and dispatch to showMapForSinglePoint
 		geocoder.geocode( { 'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				self.showMapForSinglePoint(results[0].geometry.location);
 			} else {
-				self.showError(labels.defaultError);	  
+				showError(labels.defaultError);	  
 			}
 		});
 	}
- 
 }

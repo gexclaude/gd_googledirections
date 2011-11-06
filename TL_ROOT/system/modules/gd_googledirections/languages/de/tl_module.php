@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Claude Gex 2010
+ * @copyright  Claude Gex 2010 - 2011
  * @author     Claude Gex <mail@claudegex.ch>
  * @license    LGPL
  */
@@ -36,22 +36,6 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_submit_label_default']= 'R
  * Error Labels
  */
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_check_input'] = 'Bitte überprüfen Sie Ihre Eingaben und wiederholen Sie den Vorgang.';
-
-// =400
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_request'] = 'Die Routenabfrage ist fehlerhaft.';
-// =500
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_server_error'] = 'Die Routenabfrage konnte nicht durchgeführt werden. Bitte wiederholen Sie den Vorgang später.';
-// =601
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_missing_query'] = 'Die Routenabfrage ist leer!';
-// =602
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_address'] = 'Eine der eingegebenen Adressen konnte nicht gefunden werden.' . $GLOBALS['TL_LANG']['tl_module']['googledirection_check_input'];
-// =603
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unavailable_address'] = 'Eine der eingegebenen Adressen steht nicht zur Verfügung.';
-// =604
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_unknown_directions'] = 'Die Route konnte nicht berechnet werden, entweder stehen die benötigten Daten nicht zur Verfügung oder es existiert keine Route zwischen den beiden Punkten.';
-// =610
-//$GLOBALS['TL_LANG']['tl_module']['gd_googledirection_bad_key'] = 'Der verwendete Key ist ungültig.';
-// =620, evtl. andere
 
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_invalid_request'] = 'Die Routenabfrage ist fehlerhaft.';
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirection_max_waypoints_exceeded'] = 'Die maximal zugelassene Anzahl Wegpunkte wurde überschritten.';
@@ -83,7 +67,7 @@ $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_template']= array('Templat
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_width']= array('Breite', 'Bitte geben Sie die Breite der Karte ein.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_height']= array('Höhe', 'Bitte geben Sie die Höhe der Karte ein.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker']= array('Eine Markierung in die Karte einfügen', 'Es können ein Standard-Icon oder eine individuelle Grafik sowie eine Textbox eingefügt werden.');
-$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_coords']= array('Koordinaten der Markierung', 'Die Koordinaten der Markierung können von der Kartenmitte abweichen. Ein leeres Feld setzt die Markierung in die Kartenmitte.');
+$GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_coords']= array('Koordinaten der Markierung', 'Die Koordinaten der Markierung können von der Kartenmitte abweichen. Soll der Marker angezeigt werden, so müssen die Koordinaten angegeben werden.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_icon']= array('Individuelles Icon', 'Es kann ein eigenes Icon verwendet werden, z.B. ein Firmenlogo. Ohne Auswahl wird das Standard-Icon von Google verwendet.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_shadow']= array('Individueller Schatten', 'Auch für eigene Icons können Schatten gesetzt werden.');
 $GLOBALS['TL_LANG']['tl_module']['gd_googledirections_marker_anchor']= array('Position der Markierung', 'Die Position der Markierung kann über ein Koordinatenpaar LINKS,RAUF verändert werden. 5,10 verschiebt die Box z.B. von der linken oberen Ecke des Icons um 5 Pixel nach links und 10 Pixel nach oben.');

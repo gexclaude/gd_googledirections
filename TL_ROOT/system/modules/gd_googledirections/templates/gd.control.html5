@@ -2,7 +2,7 @@
 <form action="#" onsubmit="gd<?php echo $this->moduleId; ?>.setDirections(new Array(this.from.value,<?php if($this->add_via): echo 'this.via.value, '; endif;?> this.to.value)); return false">
     <table>
 	<tr>
-	    <th align="right"><?php echo $this->fromLabel; ?>&nbsp;</th>
+	    <th style="text-align: right"><?php echo $this->fromLabel; ?>&nbsp;</th>
 	    <td>
 			<?php if($this->from_coords): ?>
 				<?php echo $this->from; ?>
@@ -15,7 +15,7 @@
 	</tr>
 	<?php if($this->add_via): ?>
 		<tr>
-			<th align="right"><?php echo $this->viaLabel; ?>&nbsp;</th>
+			<th style="text-align: right"><?php echo $this->viaLabel; ?>&nbsp;</th>
 			<td>
 				<?php if($this->via_coords): ?>
 					<?php echo $this->via; ?>
@@ -28,7 +28,7 @@
 		</tr>
 	<?php endif; ?>
 	<tr>
-	    <th align="right"><?php echo $this->toLabel; ?>&nbsp;</th>
+	    <th style="text-align: right"><?php echo $this->toLabel; ?>&nbsp;</th>
 	    <td>
 			<?php if($this->to_coords): ?>
 				<?php echo $this->to; ?>
