@@ -1,12 +1,8 @@
 =======================================================================
-GoogleDirections - TYPOlight modul
+GoogleDirections - Contao module
 Author: Claude Gex <mail@claudegex.ch>
 =======================================================================
 
 1. Install the module through the extension catalog.
-2. Get a Google API key at http://code.google.com/apis/maps/signup.html.
-3. Enter the key at the root page(s) of your website. The domain name
-   assigned to this website root has to match the one you used obtaining
-   the key.
-4. Now you are ready to generate new modules of the type "GoogleDirections".
-5. Add the module to the pages you want
+2. Now you are ready to generate new modules of the type "GoogleDirections".
+3. Add the module to the page you want
