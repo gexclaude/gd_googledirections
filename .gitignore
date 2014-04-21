@@ -1,2 +1,4 @@
 copy.sh
 /nbproject/private/
+/.idea/*
+*.iml
