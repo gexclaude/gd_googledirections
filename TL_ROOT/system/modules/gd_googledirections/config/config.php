@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Claude Gex 2010 - 2011
+ * @copyright  Claude Gex 2010 - 2014
  * @author     Claude Gex <mail@claudegex.ch>
  * @license    LGPL
  */

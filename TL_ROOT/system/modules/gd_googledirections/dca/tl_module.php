@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Claude Gex 2010 - 2011
+ * @copyright  Claude Gex 2010 - 2014
  * @author     Claude Gex <mail@claudegex.ch>
  * @license    LGPL
  */
@@ -151,6 +151,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_template'] = arra
 	'exclude'                 => true,
 	'inputType'               => 'select',
 	'options'                 => $this->getTemplateGroup('mod_gd_googledirections'),
+    //'options_callback'        => array('tl_module_gd_googledirections', 'getTemplates'),
 	'eval'                    => array('tl_class'=>'w50')
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['gd_googledirections_width'] = array
