@@ -76,7 +76,7 @@ class ModuleGD_GoogleDirections extends Module
 		$this->Template->lang = $GLOBALS['TL_LANGUAGE'];
 
 		// load the google maps api (contao ensures that the script included only once, done through array_unique)
-		$GLOBALS['TL_HEAD'][] = '<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false&amp;language='. $GLOBALS['TL_LANGUAGE'] . '" type="text/javascript"></script>';
+		$GLOBALS['TL_JAVASCRIPT'][] = 'http'.($this->Environment->ssl ? 's' : '').'://maps.google.com/maps/api/js?v=3&amp;sensor=false&amp;language='. $GLOBALS['TL_LANGUAGE'];
 		if (version_compare(VERSION, '3', '>='))
 		{
 			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/gd_googledirections/assets/gd_googledirections.js|static';
